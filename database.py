@@ -5,7 +5,7 @@ from os import listdir
 from os.path import join, basename, splitext, abspath
 from typing import Dict, List
 from gesture import Gesture
-from pprint import pprint
+from pprint import pformat
 
 import math
 
@@ -45,16 +45,17 @@ class Database:
         gesture_files = self._get_all_csv_file_paths(directory_name, endswith)
         dfs = {}
         for f in gesture_files:
-            dfs[Database._get_filename_without_extension(f)] = Gesture(pd.read_csv(f, header=None), f)
+            gesture_name = Database._get_filename_without_extension(f)
+            dfs[gesture_name] = Gesture(pd.read_csv(f, header=None), gesture_name)
         return dfs
 
     # The functions used for display and hashing
 
     def __str__(self) -> str:
-        return super().__str__()
+        return pformat(self.gestures)
 
     def __repr__(self) -> str:
-        return super().__repr__()
+        return pformat(self.gestures)
 
     def __iter__(self):
         for x in self.gestures.values():

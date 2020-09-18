@@ -1,11 +1,13 @@
-MU = 0.0
-SIGMA = 0.25
+import os
+from os.path import exists
+from constants import GESTURES_DIRECTORY_PATH, OUTPUT_DIRECTORY, EXTRA_DIRECTORY
+from database import Database
+from task1a import normalize_all_gestures
 
-def task1(directory_path, window_length, shift_length, resolution):
-    band_lengths = compute_band_lengths(resolution, MU, SIGMA)
-    for file in directory_path:
-        normalized_data = normalize_data(f)
-        quantized_data = quantize_data(normalized_data, band_lengths)
-        pattern_vector_data = compute_pattern_vectors(quantized_data, window_length, shift_length)
-        store_pattern_vectors(file_identifier, output_file_path)
+# Create all the necessary directories if they don't exist
+for directory in (OUTPUT_DIRECTORY, EXTRA_DIRECTORY):
+    if not exists(directory):
+        os.mkdir(directory)
 
+raw_gesture_database = Database(GESTURES_DIRECTORY_PATH, filenames_ending_with=".csv")
+normalize_all_gestures(raw_gesture_database)
