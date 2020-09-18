@@ -1,10 +1,11 @@
+from constants import WINDOW_LENGTH, SHIFT_LENGTH, WORDIFIED_GESTURE_FILE_SUFFIX, \
+    EXTRA_DIRECTORY, OUTPUT_DIRECTORY, WRD_FILE_SUFFIX
+from database import Database
 import pandas as pd
+from os.path import join
 
 from pprint import pprint
 from word import Word
-
-# def generate_word_string(number_list):
-#     return "[" + ":".join(map(str,number_list)) + "]"
 
 def extract_words_from_series(series, window_length, shift_length):
     w = window_length
@@ -25,6 +26,17 @@ def save_wordified_df(df, the_file_this_df_is_of, output_file_path):
         for series_index, series in df.iterrows():
             for time, word in series.items():
                 word_file.write(the_file_this_df_is_of + "," + str(series_index) + "," + str(time) + "," + str(word) + "\n")
+
+def wordify_all_gestures(quantized_gesture_database:Database):
+    for quantized_gesture in quantized_gesture_database:
+        wordified_df = wordify_gesture(quantized_gesture._dataframe, WINDOW_LENGTH, SHIFT_LENGTH)
+        wordified_df.to_csv(
+            join(EXTRA_DIRECTORY, quantized_gesture.gesture_name+WORDIFIED_GESTURE_FILE_SUFFIX),
+            header=False, index=False
+        )
+        the_file_this_df_is_of = quantized_gesture.gesture_name.split("_")[0]
+        save_wordified_df(wordified_df, the_file_this_df_is_of,
+                          join(OUTPUT_DIRECTORY, the_file_this_df_is_of+WRD_FILE_SUFFIX))
 
 if __name__ == "__main__":
     FILE_NAME = "D:\\Google Drive\\ASU\\CSE 515 Multimedia and Web Databases\\Project\\results\\1_quantized.csv"

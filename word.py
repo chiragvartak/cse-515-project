@@ -36,7 +36,7 @@ class Word:
         return hash(self.word)
 
     def __str__(self):
-        return "W" + Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
+        return Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
 
     def __repr__(self):
         return "W" + Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
