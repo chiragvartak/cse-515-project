@@ -1,18 +1,21 @@
-from typing import List
-import numpy as np
-from database import Database
-from typing import Dict, Tuple
-from sensor_vector import SensorVector
-from gesture import Gesture
 from pprint import pformat
+from typing import Dict, Tuple
+from typing import List
+
+import numpy as np
+
+from database import Database
+from gesture import Gesture
+from sensor_vector import SensorVector
 from word import Word
+
 
 class VectorSet:
     vector_set: Dict[int, SensorVector]
     gesture_name: str
-    shape: Tuple[int,int]
+    shape: Tuple[int, int]
 
-    def __init__(self, sindex_svector_mapping:Dict[int, SensorVector], gesture_name:str):
+    def __init__(self, sindex_svector_mapping: Dict[int, SensorVector], gesture_name: str):
         self.vector_set = sindex_svector_mapping
         self.gesture_name = gesture_name
 
@@ -30,10 +33,10 @@ class VectorSet:
         return np.array(M)
 
     @classmethod
-    def get_vector_set_representation_of_gesture(cls, database:Database, gesture_name:str, method="tf"):
+    def get_vector_set_representation_of_gesture(cls, database: Database, gesture_name: str, method="tf"):
         if method not in ("tf", "tfidf", "tfidf2"):
             raise Exception("Invalid method: " + method)
-        gesture:Gesture = database.get_gesture(gesture_name)
+        gesture: Gesture = database.get_gesture(gesture_name)
         if method == "tf":
             H = {}
             for i in range(gesture.get_rows()):
@@ -50,12 +53,12 @@ class VectorSet:
             raise Exception("Unreachable statement")
 
     @classmethod
-    def write_to_file(cls, vector_sets:List, possible_words_list:List[Word], output_file_path:str, file_mode='w'):
+    def write_to_file(cls, vector_sets: List, possible_words_list: List[Word], output_file_path: str, file_mode='w'):
         np.set_printoptions(threshold=np.inf, linewidth=np.inf)
         with open(output_file_path, file_mode) as output_file:
             for vector_set in vector_sets:
                 ndarray = vector_set.get_array(possible_words_list)
-                ndarray = np.vectorize(lambda x: round(x,4))(ndarray)
+                ndarray = np.vectorize(lambda x: round(x, 4))(ndarray)
                 output_file.write(str(vector_set.gesture_name) + ":\n")
                 output_file.write(str(ndarray) + "\n\n")
 
@@ -68,5 +71,5 @@ class VectorSet:
     def __len__(self):
         return len(self.vector_set)
 
-    def __getitem__(self, sensor_id:int):
+    def __getitem__(self, sensor_id: int):
         return self.vector_set[sensor_id]

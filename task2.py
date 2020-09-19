@@ -1,9 +1,9 @@
-import utils
-from vector_set import VectorSet
-from os.path import abspath, join
 import sys
+from os.path import abspath, join
 
+import utils
 from database import Database
+from vector_set import VectorSet
 
 
 def parse_inputs(arguments):
@@ -11,6 +11,7 @@ def parse_inputs(arguments):
         raise Exception("Run the program as: python3 task2.py dir=<wrd-files-dir>")
     wrd_files_directory = abspath(arguments[1][4:])
     return wrd_files_directory
+
 
 if __name__ == "__main__":
     # Parse the command line arguments
