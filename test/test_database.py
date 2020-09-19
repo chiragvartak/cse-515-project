@@ -1,3 +1,4 @@
+import utils
 import math
 
 import constants
@@ -40,8 +41,14 @@ def test_from_wrd_files():
     wrd_files_db = Database.from_wrd_files("D:\\Google Drive\\ASU\\CSE 515 Multimedia and Web Databases\\Project\\database")
     print(wrd_files_db)
 
+def test_compute_ndarrays_for_gestures():
+    wrd_files_db = Database.from_wrd_files(
+        "D:\\Google Drive\\ASU\\CSE 515 Multimedia and Web Databases\\Project\\database")
+    wrd_files_db.compute_ndarrays_for_gestures("tf", utils.words_in_database(wrd_files_db))
+
 if __name__ == "__main__":
     # test_printing()
     # test_sensor_series_iterator()
     # test_sensor_division()
-    test_from_wrd_files()
+    # test_from_wrd_files()
+    test_compute_ndarrays_for_gestures()

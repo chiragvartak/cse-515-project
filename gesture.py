@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 from pandas import DataFrame
@@ -9,6 +10,7 @@ class Gesture:
     _dataframe: pd.DataFrame  # Raw data stored for doing hacky things - try your best not to use this
     sensor_series_list: List[SensorSeries]
     gesture_name: str
+    ndarray: np.ndarray  # Will not be computed when the object is initialized
 
     def __init__(self, dataframe:DataFrame, gesture_name:str):
         self._dataframe = dataframe

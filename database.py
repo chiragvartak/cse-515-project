@@ -29,6 +29,14 @@ class Database:
         for gesture_name, gesture in self.gestures.items():
             self.gestures[gesture_name] = gesture.applymap(f)
 
+    def compute_ndarrays_for_gestures(self, method, possible_words_list):
+        from vector_set import VectorSet
+        if method not in ("tf", "tfidf", "tfidf2"):
+            raise Exception("Invalid method: " + method)
+        for gesture in  self:
+            vector_set = VectorSet.get_vector_set_representation_of_gesture(self, gesture.gesture_name, method)
+            gesture.ndarray = vector_set.get_array(possible_words_list)
+
     @classmethod
     def from_wrd_files(cls, wrd_files_directory):
         wrd_file_paths = [abspath(join(wrd_files_directory, f))
