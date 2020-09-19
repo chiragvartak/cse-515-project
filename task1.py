@@ -5,6 +5,7 @@ from typing import List, Tuple
 from database import Database
 from task1a import normalize_all_gestures
 from task1b import quantize_all_gestures
+from task1c import wordify_all_gestures
 from constants import *
 
 def parse_inputs(arguments:List) -> Tuple[str, int, int, int]:
@@ -30,3 +31,8 @@ if __name__ == "__main__":
     normalized_gesture_database = Database(EXTRA_DIRECTORY, filenames_ending_with=NORMALIZED_GESTURE_FILE_SUFFIX)
     quantize_all_gestures(normalized_gesture_database, res=RESOLUTION, mu=MU, sigma=SIGMA,
                           extra_directory=EXTRA_DIRECTORY)
+
+    # Task 1c
+    quantized_gesture_database = Database(EXTRA_DIRECTORY, filenames_ending_with=QUANTIZED_GESTURE_FILE_SUFFIX)
+    wordify_all_gestures(quantized_gesture_database, window_length=WINDOW_LENGTH, shift_length=SHIFT_LENGTH,
+                         output_directory=DATABASE_DIRECTORY, extra_directory=EXTRA_DIRECTORY)
