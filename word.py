@@ -39,7 +39,7 @@ class Word:
         return Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
 
     def __repr__(self):
-        return "W" + Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
+        return Word.START_SEPARATOR + ":".join(map(str, self.word)) + Word.END_SEPARATOR
 
 if __name__ == "__main__":
     word = Word.parse("<2:-9:17:10000:234>")
