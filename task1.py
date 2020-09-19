@@ -1,21 +1,24 @@
-from sys import argv
 import os
 from os.path import abspath, join, exists
+from sys import argv
 from typing import List, Tuple
+
+from constants import *
 from database import Database
 from task1a import normalize_all_gestures
 from task1b import quantize_all_gestures
 from task1c import wordify_all_gestures
-from constants import *
 
-def parse_inputs(arguments:List) -> Tuple[str, int, int, int]:
+
+def parse_inputs(arguments: List) -> Tuple[str, int, int, int]:
     if len(arguments) != 5:
         raise Exception("Run the program as: python3 task1.py dir=<db-dir> w=3 s=2 r=3")
     database_directory = abspath(arguments[1][4:])
     window_length = int(arguments[2][2:])
     shift_length = int(arguments[3][2:])
     resolution = int(arguments[4][2:])
-    return (database_directory, window_length, shift_length, resolution)
+    return database_directory, window_length, shift_length, resolution
+
 
 if __name__ == "__main__":
     DATABASE_DIRECTORY, WINDOW_LENGTH, SHIFT_LENGTH, RESOLUTION = parse_inputs(argv)
