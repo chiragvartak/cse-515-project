@@ -4,6 +4,8 @@ from os.path import abspath, join, exists
 from typing import List, Tuple
 from database import Database
 from task1a import normalize_all_gestures
+from task1b import quantize_all_gestures
+from constants import *
 
 def parse_inputs(arguments:List) -> Tuple[str, int, int, int]:
     if len(arguments) != 5:
@@ -20,6 +22,11 @@ if __name__ == "__main__":
     if not exists(EXTRA_DIRECTORY):
         os.mkdir(EXTRA_DIRECTORY)
 
+    # Task 1a
     raw_gesture_database = Database(DATABASE_DIRECTORY, filenames_ending_with=".csv")
     normalize_all_gestures(raw_gesture_database, extra_directory=EXTRA_DIRECTORY)
 
+    # Task 1b
+    normalized_gesture_database = Database(EXTRA_DIRECTORY, filenames_ending_with=NORMALIZED_GESTURE_FILE_SUFFIX)
+    quantize_all_gestures(normalized_gesture_database, res=RESOLUTION, mu=MU, sigma=SIGMA,
+                          extra_directory=EXTRA_DIRECTORY)

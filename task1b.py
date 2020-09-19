@@ -3,7 +3,7 @@ from os.path import join
 
 from scipy.special import erf
 
-from constants import RESOLUTION, SIGMA, MU, EXTRA_DIRECTORY, QUANTIZED_GESTURE_FILE_SUFFIX
+from constants import QUANTIZED_GESTURE_FILE_SUFFIX
 from database import Database
 
 
@@ -21,10 +21,8 @@ def compute_gaussian_band_lengths(resolution, mu, sigma):
     r = resolution
     D = {}
     for i in range(1, resolution + 1):
-        lengthi = 2 * limited_gaussian_integral((i - r - 1) / r, (i - r) / r, mu, sigma) / limited_gaussian_integral(-1,
-                                                                                                                     1,
-                                                                                                                     mu,
-                                                                                                                     sigma)
+        lengthi = 2 * limited_gaussian_integral((i - r - 1) / r, (i - r) / r, mu, sigma) / \
+                  limited_gaussian_integral(-1, 1, mu, sigma)
         D[i] = lengthi
     return D
 
@@ -55,13 +53,11 @@ def quantize_df(df, gaussian_offsets):
     return df.applymap(lambda x: quantify_number(x, gaussian_offsets))
 
 
-def quantize_all_gestures(normalized_gesture_database: Database):
-    gaussian_offsets = compute_gaussian_offsets(
-        compute_gaussian_band_lengths(RESOLUTION, SIGMA, MU)
-    )
+def quantize_all_gestures(normalized_gesture_database: Database, res, mu, sigma, extra_directory):
+    gaussian_offsets = compute_gaussian_offsets(compute_gaussian_band_lengths(res, mu, sigma))
     for normalized_gesture in normalized_gesture_database:
         quantized_df = quantize_df(normalized_gesture._dataframe, gaussian_offsets)
         quantized_df.to_csv(
-            join(EXTRA_DIRECTORY, normalized_gesture.gesture_name + QUANTIZED_GESTURE_FILE_SUFFIX),
+            join(extra_directory, normalized_gesture.gesture_name + QUANTIZED_GESTURE_FILE_SUFFIX),
             header=False, index=False
         )
