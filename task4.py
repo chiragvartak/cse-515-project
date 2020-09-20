@@ -29,9 +29,9 @@ if __name__ == "__main__":
     for gesture in db:
         distances.append((abs(np.linalg.norm(query_gesture.ndarray - gesture.ndarray)), gesture.gesture_name))
     distances.sort()
-    print("The 10 most similar gestures are:")
+    print("The 10 most similar gestures to", GESTURE_NAME+".csv using", TYPE.upper(), "values are:")
     i = 1
     for distance, gesture_name in distances:
-        if i > 10: break
+        if i > 11: break
         print(gesture_name + ".csv with distance", round(distance, 4))
         i += 1
