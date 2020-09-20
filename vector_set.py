@@ -46,7 +46,12 @@ class VectorSet:
                 H[sensor_index] = sensor_vector
             return VectorSet(H, gesture_name)
         elif method == "tfidf":
-            raise NotImplementedError
+            H = {}
+            for i in range(gesture.get_rows()):
+                sensor_index = i
+                sensor_vector = SensorVector.get_sensor_vector_by_tfidf(gesture_name, sensor_index, database)
+                H[sensor_index] = sensor_vector
+            return VectorSet(H, gesture_name)
         elif method == "tfidf2":
             raise NotImplementedError
         else:

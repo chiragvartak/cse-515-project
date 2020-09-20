@@ -28,14 +28,14 @@ if __name__ == "__main__":
     for gesture_name in sorted(wrd_files_db.gestures.keys()):
         wordified_gesture = wrd_files_db.get_gesture(gesture_name)
         gesture_vectors_by_tf.append(represent_gesture(wrd_files_db, gesture_name, method="tf"))
-        # TODO: Make this TFIDF
-        gesture_vectors_by_tfidf.append(represent_gesture(wrd_files_db, gesture_name, method="tf"))
-        # TODO: Make this TFIDF2
-        gesture_vectors_by_tfidf2.append(represent_gesture(wrd_files_db, gesture_name, method="tf"))
+        gesture_vectors_by_tfidf.append(represent_gesture(wrd_files_db, gesture_name, method="tfidf"))
+        # TODO
+        # gesture_vectors_by_tfidf2.append(represent_gesture(wrd_files_db, gesture_name, method="tfidf2"))
 
     # Print the vector representation of vectors to vectors.txt
     possible_words_list = utils.words_in_database(wrd_files_db)
     output_file_path = join(WRD_FILES_DIRECTORY, "vectors.txt")
     VectorSet.write_to_file(gesture_vectors_by_tf, possible_words_list, output_file_path, file_mode='w')
     VectorSet.write_to_file(gesture_vectors_by_tfidf, possible_words_list, output_file_path, file_mode='a+')
-    VectorSet.write_to_file(gesture_vectors_by_tfidf2, possible_words_list, output_file_path, file_mode='a+')
+    # TODO
+    # VectorSet.write_to_file(gesture_vectors_by_tfidf2, possible_words_list, output_file_path, file_mode='a+')
