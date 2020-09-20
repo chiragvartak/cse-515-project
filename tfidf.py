@@ -19,7 +19,7 @@ def idf(word:Word, sensor_index:int, database:Database):
             m += 1
     if m == 0:
         m = 1
-    N = len(database.get_gesture_count())
+    N = database.get_gesture_count()
     return math.log(N / m)
 
 def combine_tf_idf(tf, idf):

@@ -11,7 +11,7 @@ class SensorSeries:
         self.sensor_index = sensor_index
 
     def __contains__(self, item):
-        return item in self._series
+        return not self._series[self._series.isin([item])].empty
 
     def __getitem__(self, key:int):
         return self._series[key]
