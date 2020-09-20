@@ -19,34 +19,28 @@ def limited_gaussian_integral(x1, x2, mu, sigma):
 
 def compute_gaussian_band_lengths(resolution, mu, sigma):
     r = resolution
-    D = {}
-    for i in range(1, resolution + 1):
+    L = []
+    for i in range(1, 2 * resolution + 1):
         lengthi = 2 * limited_gaussian_integral((i - r - 1) / r, (i - r) / r, mu, sigma) / \
                   limited_gaussian_integral(-1, 1, mu, sigma)
-        D[i] = lengthi
-    return D
+        L.append((i, lengthi))
+    return L
 
 
 def compute_gaussian_offsets(gaussian_band_lengths):
-    D = {}
-    total_length_till_now = 0.0
-    for length_index, length in gaussian_band_lengths.items():
-        total_length_till_now = total_length_till_now + length
-        D[length_index] = total_length_till_now
-    return D
+    L = []
+    current_offset = -1.0
+    for length_index, length in gaussian_band_lengths:
+        current_offset = current_offset + length
+        L.append((length_index, current_offset))
+    L[-1] = (L[-1][0], 1.1)
+    return L
 
 
 def quantify_number(number, gaussian_offsets):
-    if number < 0:
-        for integer, offset in gaussian_offsets.items():
-            if abs(number) <= offset:
-                return -integer
-    elif number >= 0:
-        for integer, offset in gaussian_offsets.items():
-            if number <= offset:
-                return integer
-    else:
-        raise Exception("This statement should not be reachable")
+    for integer, offset in gaussian_offsets:
+        if number <= offset:
+            return integer
 
 
 def quantize_df(df, gaussian_offsets):
