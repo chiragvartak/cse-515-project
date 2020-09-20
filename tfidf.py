@@ -2,6 +2,7 @@ import math
 from database import Database
 from word import Word
 from sensor_series import SensorSeries
+from gesture import Gesture
 
 def tf(word: Word, sensor_series: SensorSeries):
     if not isinstance(sensor_series[0], Word):
@@ -20,6 +21,16 @@ def idf(word:Word, sensor_index:int, database:Database):
     if m == 0:
         m = 1
     N = database.get_gesture_count()
+    return math.log(N / m)
+
+def idf2(word:Word, gesture:Gesture):
+    m = 0
+    for sensor_series in gesture:
+        if word in sensor_series:
+            m += 1
+    if m == 0:
+        m = 1
+    N = gesture.get_rows()
     return math.log(N / m)
 
 def combine_tf_idf(tf, idf):

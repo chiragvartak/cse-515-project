@@ -30,7 +30,6 @@ def write_vectors_txt():
     )
 
 if __name__ == "__main__":
-    # TODO: There is something wrong with my tf values. 0.26 everywhere when it should be 0.25.
     # print_a_vector_set()
     # print_ndarray_representation_of_a_vector_set()
     write_vectors_txt()

@@ -53,7 +53,12 @@ class VectorSet:
                 H[sensor_index] = sensor_vector
             return VectorSet(H, gesture_name)
         elif method == "tfidf2":
-            raise NotImplementedError
+            H = {}
+            for i in range(gesture.get_rows()):
+                sensor_index = i
+                sensor_vector = SensorVector.get_sensor_vector_by_tfidf2(gesture, sensor_index)
+                H[sensor_index] = sensor_vector
+            return VectorSet(H, gesture_name)
         else:
             raise Exception("Unreachable statement")
 
