@@ -1,6 +1,6 @@
 from task1b import *
 
-res = 3
+res = 1
 mu = 0.0
 sigma = 0.25
 
