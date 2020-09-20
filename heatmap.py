@@ -17,6 +17,8 @@ class HeatMap:
 
     def plot(self, output_file_path, title):
         df = self.df.loc[:, (self.df != 0).any(axis=0)]
+        if df.empty:
+            df = self.df
         plt.figure(figsize=(10, 7))
         hm = sns.heatmap(
             df, cmap="gray_r", square=True,
