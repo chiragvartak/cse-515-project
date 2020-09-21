@@ -8,6 +8,7 @@ from database import Database
 from gesture import Gesture
 from sensor_vector import SensorVector
 from word import Word
+import utils
 
 
 class VectorSet:
@@ -66,7 +67,7 @@ class VectorSet:
     def write_to_file(cls, vector_sets: List, possible_words_list: List[Word], output_file_path: str, file_mode='w'):
         np.set_printoptions(threshold=np.inf, linewidth=np.inf)
         with open(output_file_path, file_mode) as output_file:
-            for vector_set in vector_sets:
+            for vector_set in utils.sort_vector_sets_list(vector_sets):
                 ndarray = vector_set.get_array(possible_words_list)
                 ndarray = np.vectorize(lambda x: round(x, 4))(ndarray)
                 output_file.write(str(vector_set.gesture_name) + ":\n")

@@ -33,7 +33,9 @@ if __name__ == "__main__":
 
     # Print the vector representation of vectors to vectors.txt
     possible_words_list = utils.words_in_database(wrd_files_db)
-    output_file_path = join(WRD_FILES_DIRECTORY, "vectors.txt")
-    VectorSet.write_to_file(gesture_vectors_by_tf, possible_words_list, output_file_path, file_mode='w')
-    VectorSet.write_to_file(gesture_vectors_by_tfidf, possible_words_list, output_file_path, file_mode='a+')
-    VectorSet.write_to_file(gesture_vectors_by_tfidf2, possible_words_list, output_file_path, file_mode='a+')
+    tf_output_file_path = join(WRD_FILES_DIRECTORY, "vectors-tf.txt")
+    tfidf_output_file_path = join(WRD_FILES_DIRECTORY, "vectors-tfidf.txt")
+    tfidf2_output_file_path = join(WRD_FILES_DIRECTORY, "vectors-tfidf2.txt")
+    VectorSet.write_to_file(gesture_vectors_by_tf, possible_words_list, tf_output_file_path, file_mode='w')
+    VectorSet.write_to_file(gesture_vectors_by_tfidf, possible_words_list, tfidf_output_file_path, file_mode='w')
+    VectorSet.write_to_file(gesture_vectors_by_tfidf2, possible_words_list, tfidf2_output_file_path, file_mode='w')

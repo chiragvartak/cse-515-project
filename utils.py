@@ -1,3 +1,4 @@
+from typing import List
 from database import Database
 
 def floating_point_equals(f1, f2):
@@ -13,3 +14,14 @@ def words_in_database(database:Database):
             for word in sensor_series:
                 occuring_words.add(word)
     return sorted(list(occuring_words))
+
+def sort_vector_sets_list(vs_list: List):
+    Z = zip([vs.gesture_name for vs in vs_list], vs_list)
+    numbers_list = []
+    non_numbers_list = []
+    for s in Z:
+        if s[0].isdigit():
+            numbers_list.append((int(s[0]),s[1]))
+        else:
+            non_numbers_list.append(s)
+    return [vs for _,vs in sorted(numbers_list)] + [vs for _,vs in sorted(non_numbers_list)]
